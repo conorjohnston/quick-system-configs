@@ -42,7 +42,7 @@ echo "------------------"
 echo "Starting Media Services"
 echo "------------------"
 
-sudo docker-compose -f ~/quick-vm-configs/media-server/media-stack.yml up -d
+sudo docker-compose -f ~/quick-system-configs/media-server/media-stack.yml up -d
 
 echo "------------------"
 echo "DONE!"
