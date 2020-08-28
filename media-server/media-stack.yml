@@ -1,0 +1,50 @@
+version: "3.6"
+services:
+
+
+  portainer:
+    image: "portainer/portainer"
+    container_name: "portainer"
+    restart: always
+    command: -H unix:///var/run/docker.sock
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /media:/Data
+      - /media:/shared
+    environment:
+      - TZ=Europe/London
+      - PUID=1000
+      - PGID=1000
+  plex:
+    image: "plexinc/pms-docker:latest"
+    container_name: "plex"
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="Europe/London"
+    network_mode: host
+    volumes:
+      - ~/docker/plex/database:/config
+      - ~/docker/plex/temp:/transcode
+      - /media:/Data
+  tautulli:
+    container_name: "tautulli"
+    image: "tautulli/tautulli"
+    restart: unless-stopped
+    environment:
+      - TZ="Europe/London"
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - "8181:8181"
+    volumes:
+      - ~/docker/tautulli/database:/config
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json
+    command: --interval 30
