@@ -44,6 +44,7 @@ services:
       - ~/docker/tautulli/database:/config
   watchtower:
     image: containrrr/watchtower
+    container_name: "watchtower"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
